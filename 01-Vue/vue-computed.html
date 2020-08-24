@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+<div id="app">
+  <div>{{getFullName()}}</div>
+  <div>{{getFullName()}}</div>
+  <div>{{getFullName()}}</div>
+  <div>{{getFullName()}}</div>
+  ===========
+  <div>{{fullName}}</div>
+  <div>{{fullName}}</div>
+  <div>{{fullName}}</div>
+  <div>{{fullName}}</div>
+</div>
+
+<button>按钮1</button>
+<button>按钮2</button>
+<button>按钮3</button>
+<button>按钮4</button>
+
+<script src="../js/vue.js"></script>
+<script>
+
+  const app = new Vue({
+    el: '#app',
+    data: {
+      message: '',
+      firstName: 'abc',
+      lastName: 'eee',
+    },
+    methods: {
+      getFullName() {
+        console.log("123")
+        return this.firstName + " " + this.lastName;
+      }
+    },
+    computed: {
+      fullName() {
+        console.log("1cccc23")
+        return this.firstName + ' ' + this.lastName;
+      }
+    }
+  })
+
+
+  let name = document.getElementsByTagName("button");
+
+  for (let i = 0; i < name.length; i++) {
+    name[i].addEventListener('click', function () {
+      console.log("打印" + i)
+    })
+  }
+
+</script>
+</body>
+</html>

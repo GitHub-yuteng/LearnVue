@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id="app">
+    <cpn></cpn>
+    ============
+    <cpn1></cpn1>
+</div>
+
+<div id="app2">
+    <!--    <cpn></cpn>-->
+</div>
+
+
+<script src="../js/vue.js"></script>
+<script>
+
+  const cpnC = Vue.extend({
+    template:
+        `<div>
+            <h2>1</h2>
+         </div>`
+  })
+
+  //父组件
+  const cpnCC = Vue.extend({
+    template:
+                `
+        <div>
+            <h2>A</h2>
+            <cpn></cpn>
+        </div>`
+    ,
+    components: {
+      cpn: cpnC//子组件
+    }
+  })
+
+  // Vue.component('cpn',cpnC)
+
+  const app = new Vue({
+    el: '#app',
+    data: {
+      message: '你好'
+    },
+    components: { 
+      //cpn 使用组件时的标签名
+      cpn: cpnC,
+      cpn1: cpnCC,
+    }
+  })
+
+  const app2 = new Vue({
+    el: '#app2'
+  })
+</script>
+
+</body>
+</html>

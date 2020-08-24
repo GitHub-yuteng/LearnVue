@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+
+<div id="app">
+  <cpn1></cpn1>
+  <cpn1></cpn1>
+
+  ==============
+  <cpn2></cpn2>
+
+  <cpn></cpn>
+  <idcpn></idcpn>
+</div>
+
+<!--script模版-->
+<script type="text/x-template" id="cpnn">
+  <div>
+    <h1>模版</h1>
+  </div>
+</script>
+<!--template模版-->
+<template id="template">
+  <div>
+    <h1>template</h1>
+    {{message}}
+    <h2>{{counter}}</h2>
+    <button @click="incr">+</button>
+    <button @click="decr">-</button>
+  </div>
+</template>
+<script src="../js/vue.js"></script>
+<script>
+
+  Vue.component('idcpn', {
+    template: '#cpnn',
+  })
+
+
+  const cpn = Vue.extend({
+    template:
+      `<div>
+            <h2>cpn</h2>
+         </div>`
+  })
+
+  Vue.component('cpn', cpn)
+
+
+  //全局组件 语法糖
+  Vue.component('cpn1', {
+    // template: '#cpn'
+    template: '#template',
+    data() {//组件data 必须是一个函数 返回一个对象 数据存放
+      //为什么是一个函数，因为会有很多个组件 函数可以使 每个组件有一个对象存储域
+      return {
+        message: 'msg',
+        counter: 0
+      }
+    },
+    methods: {
+      incr() {
+        this.counter++
+      },
+      decr() {
+        this.counter--
+      }
+    }
+  })
+
+  const app = new Vue({
+    el: '#app',
+    data: {
+      message: '你好'
+    },
+    components: {
+      cpn2: {
+        template:
+          `<div>
+                <h2>222222</h2>
+             </div>`
+      }
+    }
+  })
+</script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+
+<div id="app">
+  <cpn ref="a"></cpn>
+  <cpn ref="b"></cpn>
+  <cpn ref="c"></cpn>
+  <cpn ref="d"></cpn>
+  {{message}}
+  <button @click="btnClick">按钮</button>
+</div>
+
+<template id="cpn">
+  <div>
+    <h2>cpn</h2>
+  </div>
+</template>
+<script src="../js/vue.js"></script>
+<script>
+
+  const app = new Vue({
+    el: '#app',
+    data: {
+      message: '你好'
+    },
+    methods: {
+      btnClick() {
+        console.log(this.$children);
+        this.$children[0].showMessage()
+        console.log("2 " + this.$children[0].name);
+        console.log(this.$refs);
+        console.log("4 " + this.$refs.b.name);
+      }
+    },
+    components: {
+      cpn: {
+        template: '#cpn',
+        data() {
+          return {
+            name: 'ccccname'
+          }
+        },
+        methods: {
+          showMessage() {
+            console.log('showMessage');
+            //访问父组件
+            console.log(this.$parent.message);
+            console.log('====');
+            console.log(this.$root.message);
+          }
+        }
+      }
+    }
+  })
+</script>
+
+</body>
+</html>

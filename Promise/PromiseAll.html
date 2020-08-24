@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src="https://s3.pstatp.com/cdn/expire-1-M/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+
+<script type="text/javascript">
+
+  Promise.all([
+    new Promise((resolve, reject) => {
+      setTimeout(() => {
+        $.ajax({
+          url: 'http://127.0.0.1:8080/provide',
+          type: "GET",
+          dataType: "json",
+          success: function (response) {
+            resolve(response);
+          }
+        })
+      }, 2000)
+    }),
+    new Promise((resolve, reject) => {
+      setTimeout(() => {
+        $.ajax({
+          url: 'http://127.0.0.1:8080/provide',
+          type: "GET",
+          dataType: "json",
+          success: function (response) {
+            console.log(response.data.name);
+            resolve(response);
+          }
+        })
+      }, 1000)
+    })
+  ]).then(results => {
+    console.log(results);
+    console.log(results[0].data.name + results[0].data.age);
+    console.log(results[1]);
+  })
+
+</script>
+
+</body>
+</html>

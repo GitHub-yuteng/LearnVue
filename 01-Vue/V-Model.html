@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id="app">
+    <input type="text" v-model="message">
+    <input type="text" :value="message" @input="valueChange"><!--v-model 实现原理-->
+    <input type="text" :value="message" @input="message = $event.target.value"><!--v-model 实现原理-->
+    {{message}}<br/>
+    ===========================
+    <br/>
+    <label for="male">
+        <input type="radio" id="male" name="sex" value="男" v-model="sex">男
+    </label>
+    <label for="female">
+        <input type="radio" id="female" name="sex" value="女" v-model="sex">女
+    </label>
+    <h2>{{sex}}</h2>
+    ===========================
+    <br/>
+    <label for="agree">
+        <input type="checkbox" id="agree" v-model="isAgree">同意
+    </label>
+    <h2>{{isAgree}}</h2>
+    <button :disabled="!isAgree">下一步</button>
+
+    ===========================
+    <br/>
+    <br/>
+    <input type="checkbox" value="篮球" v-model="hobbies">篮球
+    <input type="checkbox" value="足球" v-model="hobbies">足球
+    <input type="checkbox" value="排球" v-model="hobbies">排球
+    <input type="checkbox" value="乒乓球" v-model="hobbies">乒乓球
+    <h2>{{hobbies}}</h2>
+
+    ===========================
+    <br/>
+    <br/>
+
+    <label v-for="item in initHobbies" :for="item">
+        <input type="checkbox" :value="item" :id="item" v-model="hobbies">{{item}}
+    </label>
+    <h2>{{hobbies}}</h2>
+    <br/>
+    ===========================
+    <br/>
+    <br/>
+
+    <select name="item" v-model="fruit">
+        <option value="苹果">苹果</option>
+        <option value="香蕉">香蕉</option>
+        <option value="西瓜">西瓜</option>
+    </select>
+    <h2>{{fruit}}</h2>
+
+    ===========================
+    <br/>
+    <br/>
+
+    <select name="item" v-model="fruits" multiple>
+        <option value="苹果">苹果</option>
+        <option value="香蕉">香蕉</option>
+        <option value="西瓜">西瓜</option>
+        <option value="橘子">橘子</option>
+    </select>
+    <h2>{{fruits}}</h2>
+
+
+    ===========================修饰符 lazy
+    <br/>
+    <br/>
+    <input type="text" v-model.lazy="message">
+    <h2>{{message}}</h2>
+
+    ===========================number
+    <br/>
+    <br/>
+    <input type="number" v-model.number="age">
+    <h2>{{age}} {{typeof age}}</h2>
+
+</div>
+
+
+<script src="../js/vue.js"></script>
+<script>
+
+  const app = new Vue({
+    el: '#app',
+    data: {
+      message: '你好',
+      sex: '男',
+      isAgree: false,
+      hobbies: [],
+      fruit: '苹果',
+      fruits: [],
+      initHobbies: ['篮球', '足球', '排球', '乒乓球'],
+      age: 18,
+    },
+    methods: {
+      valueChange(event) {
+        this.message = event.target.value
+      }
+    }
+  })
+</script>
+
+</body>
+</html>

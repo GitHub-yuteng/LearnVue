@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+<div id="app">
+  <cpn :number1="num1"
+       :number2="num2"
+       @num1-change="num1change"
+       @num2-change="num2change"
+       :namec="namer">
+  </cpn>
+</div>
+
+
+<template id="cpn">
+  <div>
+    <h2>number1:{{number1}}</h2>
+    <h2>dnumber1:{{dnumber1}}</h2>
+    <input type="text" :value="dnumber1" @input="num1Input">
+
+    <h2>number2:{{number2}}</h2>
+    <h2>dnumber2:{{dnumber2}}</h2>
+    <input type="text" :value="dnumber2" @input="num2Input">
+
+    <h1>{{namec}}</h1>
+    <h1>{{namedata}}</h1>
+  </div>
+</template>
+<script src="../js/vue.js"></script>
+<script>
+
+  const app = new Vue({
+    el: '#app',
+    data: {
+      num1: 1,
+      num2: 2,
+      namer: 'yt'
+    },
+    methods: {
+      num1change(value) {
+        // this.num1 = parseInt(value)
+        this.num1 = value * 1
+      },
+      num2change(value) {
+        // this.num2 = parseInt(value)
+        this.num2 = value * 1
+      }
+    },
+    components: {
+      cpn: {
+        template: '#cpn',
+        props: {
+          number1: Number,
+          number2: Number,
+          namec: String,
+        },
+        data() {
+          return {
+            dnumber1: this.number1,
+            dnumber2: this.number2,
+            namedata: this.namec,
+          }
+        },
+        watch: {
+          namec(newValue, oldValue) {
+            this.namedata = newValue + "===" + oldValue;
+          }
+        },
+        methods: {
+          num1Input(event) {
+            this.dnumber1 = event.target.value
+            this.$emit('num1-change', this.dnumber1)
+            this.dnumber2 = this.dnumber1 * 100
+            this.$emit('num2-change', this.dnumber2)
+          },
+          num2Input(event) {
+            this.dnumber2 = event.target.value
+            this.$emit('num2-change', this.dnumber2)
+            this.dnumber1 = this.dnumber2 / 100
+            this.$emit('num1-change', this.dnumber1)
+          }
+        }
+      }
+    }
+  })
+</script>
+
+</body>
+</html>

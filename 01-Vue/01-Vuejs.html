@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .active {
+            color: rgba(255, 0, 191, 0.62);
+        }
+    </style>
+</head>
+<body>
+
+
+<div id="app">
+    <h3>{{message}}</h3>
+    <h1>{{movies}}</h1>
+    <ul>
+        <li>{{movies[0]}}</li>
+        <li>{{movies[1]}}</li>
+    </ul>
+
+    <ul>
+        <li v-for="(item,index) in movies" :class="{active:currentIndex === index}" @click="changeColor(index)" :key="item">{{item}}</li>
+        <!--加key 底层变类似链表操作-->
+    </ul>
+
+    <ul>
+        <li v-for="info of infos">{{info}}</li>
+    </ul>
+
+    <ul>
+        <li v-for="(value,key,index) in infos">{{value.name}}-{{value.age}}={{key}}={{index}}</li>
+    </ul>
+
+    <h2>当前计数:{{counter}}</h2>
+    <button @click="increment('123',$event)">+</button>
+    <button v-on:click="decrement">-</button>
+</div>
+
+
+
+
+<script src="../js/vue.js">
+
+</script>
+<script>
+
+    const app = new Vue({
+        el: '#app',//用于挂载要管理的元素
+        data: {
+            message: '你好Vue',
+            movies: ['v', 'a', 'c'],
+            currentIndex: 0,
+            counter: 0,
+            infos: [{name: 'why', age: 18, height: 1.8}, {name: 'aa', age: 11, height: 1.82}]
+        },
+        methods: {
+            increment(num, event) {
+                this.counter++
+                console.log('increment', num, event);
+            },
+            decrement() {
+                this.counter--
+                console.log('decrement');
+            },
+            changeColor(index) {
+                this.currentIndex = index;
+            }
+        }
+    })
+
+    const nums = [10, 20, 30, 27, 22, 222, 111, 4444]
+    let newNums = nums.filter(function (num) {
+        return num < 100
+    })
+    console.log(newNums);
+
+    let new2Nums = newNums.map(function (num) {
+        return num * 2
+    })
+    console.log(new2Nums);
+
+    let new3Nums = new2Nums.reduce(function (preValue, n) {
+        return preValue + n
+    }, 0)
+    console.log(new3Nums);
+
+    let sum = nums.filter(n => n < 100).map(n => n * 2).reduce((pre, n) => pre + n);
+    console.log(sum);
+</script>
+
+
+</body>
+</html>

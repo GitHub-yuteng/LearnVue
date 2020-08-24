@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    [v-cloak] {
+      display: none;
+    }
+
+    .active {
+      color: rgba(11, 42, 0, 0.62);
+    }
+  </style>
+</head>
+<body>
+
+<div id="app">
+  <div v-cloak>{{message}}</div><!--在没加载出来之前 不显示 -->
+  <div v-cloak v-once>{{message}}</div><!--只更改一次 不会改变-->
+  <div v-cloak v-html="url">{{url}}</div><!--解析 html标签-->
+  ================
+  <div v-pre>{{message}}</div><!--不做解析 原封不动展示-->
+  --------------------
+
+  <div>{{message}}</div>
+
+  <img v-bind:src="imgUrl" alt=""/><br/>
+  <a v-bind:href="searchUrl" target="_blank">百度一下</a>
+  <a :href="searchUrl" target="_blank">百度一下</a><!--语法糖-->
+
+  <h2 :class="active">{{message}}</h2>
+  <h2 v-bind:class="active">{{message}}</h2>
+  0000000000000000000
+  <h1 v-bind:class="getClasses()">{{message}}</h1>
+  <button v-on:click="btnClick()">按钮</button>
+
+
+  <h2>!!!!!
+    <div>{{fullName}}</div>
+  </h2>
+  <h1>!!!!!
+    <div>{{getFullName()}}</div>
+  </h1>
+
+
+  <div @click="divClick">
+    div
+    <button @click.stop="buttonClick">按钮1111</button><!--stop 阻止时间冒泡-->
+  </div>
+
+  <form action="baidu">
+    <input type="submit" value="提交" @click.prevent="submitClick"><!--阻止默认事件-->
+  </form>
+
+  <input type="text" @keyup.enter.once="keyUp">
+
+  <div>
+    <h2 v-if="vIf">
+      <div>DIV</div>
+      {{message}}
+    </h2>
+    <h1 v-else>v-else false</h1>
+  </div>
+
+  <div>
+    <h3 v-if="score>=90">优秀1</h3>
+    <h3 v-else-if="score>=80">良好1</h3>
+    <h3 v-else-if="score>=60">及格1</h3>
+    <h3 v-else>不及格</h3>
+  </div>
+  =======
+  <div>
+    <h1 v-cloak>{{result}}</h1>
+  </div>
+  ------------
+  <div>
+    <h3 v-show="isShow">Show</h3>
+  </div>
+  =======================
+
+  <div>
+    <h1 v-cloak>{{getResult()}}</h1>
+  </div>
+  =======================
+
+  <div>
+    <span v-if="email">
+        <label for="username">邮箱登录</label>
+        <input type="text" id="username" placeholder="用户邮箱" key="email"><!--添加key 改变类型清空数据 相同key 可以复用-->
+    </span>
+    <span v-if="iphone">
+        <label for="phone">手机登录</label>
+        <input type="text" id="phone" placeholder="手机号" key="phone">
+    </span>
+    <button @click="changeType">切换类型</button>
+  </div>
+</div>
+
+
+<script src="../js/vue.js"></script>
+<script>
+  const a = 30;
+
+  const app = new Vue({
+    el: '#app',
+    data: {
+      message: '你好',
+      url: '<a href="http://www.baidu.com">百度一下</a>',
+      imgUrl: 'https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png',
+      searchUrl: 'https://www.baidu.com',
+      active: 'active',
+      isActive: true,
+      isLine: true,
+      firstName: 'a',
+      lastName: 'b',
+      vIf: false,
+      score: 10,
+      iphone: true,//默认
+      email: false,
+      isShow: true,
+
+    },
+    computed: {
+      fullName() {
+        console.log("1")
+        return this.firstName + ' ' + this.lastName;
+      },
+      result() {
+        let scoreMsg = '';
+        if (this.score >= 90) {
+          scoreMsg = '优秀'
+        } else if (this.score >= 80) {
+          scoreMsg = '良好'
+        } else if (this.score >= 60) {
+          scoreMsg = '及格'
+        } else {
+          scoreMsg = '不及格'
+        }
+        return scoreMsg;
+      }
+    },
+    methods: {
+      getFullName() {
+        console.log("1")
+        return this.firstName + ' ' + this.lastName;
+      },
+      btnClick() {
+        this.isActive = !this.isActive
+      },
+      getClasses() {
+        return {active: this.isActive, line: this.isLine}
+      },
+      buttonClick() {
+        console.log("buttonClick");
+      },
+      divClick() {
+        console.log("divClick");
+      },
+      submitClick() {
+        console.log("submitClick");
+      },
+      keyUp() {
+        console.log("keyUp");
+      },
+      changeType() {
+        this.iphone = !this.iphone
+        this.email = !this.email
+      },
+      getResult() {
+        let scoreMsg = '';
+        if (this.score >= 90) {
+          scoreMsg = '优秀'
+        } else if (this.score >= 80) {
+          scoreMsg = '良好'
+        } else if (this.score >= 60) {
+          scoreMsg = '及格'
+        } else {
+          scoreMsg = '不及格'
+        }
+        return scoreMsg;
+      }
+    }
+  })
+
+
+</script>
+
+</body>
+</html>

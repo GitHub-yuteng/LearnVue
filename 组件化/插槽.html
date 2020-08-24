@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Slot</title>
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+</head>
+<body>
+
+<div id="app">
+  <cpn><span slot="center">标题</span><span slot="left">LEFT</span></cpn>
+  <cpnn>
+    <template slot-scope="db">
+      <!--            <span v-for="item in slots.data">{{item}} - </span>-->
+      <span>{{db.data.join(' - ')}}</span>
+    </template>
+  </cpnn>
+</div>
+
+<template id="cpn">
+  <div>
+    <slot name="left">
+      <button>按钮</button>
+    </slot><!--默认-->
+    <slot name="center">
+      <button>按钮</button>
+    </slot><!--默认-->
+    <slot name="right">
+      <button>按钮</button>
+    </slot><!--默认-->
+    <slot>
+      <button>按钮</button>
+    </slot>
+  </div>
+</template>
+
+<template id="cpnn">
+  <div>
+    <slot :data="pL"><!--绑定组件值-->
+      <ul>
+        <li v-for="p in pL">{{p}}</li>
+      </ul>
+    </slot>
+  </div>
+</template>
+<script src="../js/vue.js"></script>
+<script>
+
+  const app = new Vue({
+    el: '#app',
+    data: {
+      message: '你好'
+    },
+    components: {
+      cpn: {
+        template: '#cpn'
+      },
+      cpnn: {
+        template: '#cpnn',
+        data() {
+          return {
+            pL: ['a', 'b', 'c'],
+          }
+        }
+      }
+    }
+  })
+</script>
+</body>
+</html>

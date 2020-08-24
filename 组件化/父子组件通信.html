@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+<div id="app">
+  {{message}}<br/>
+  ============
+  <cpn :cmovies="movies" :cmessage="message"></cpn><!--子组件绑定父组件数据 如果遇见驼峰 cMovies -> c-movies 转化 Vue不支持驼峰-->
+  <cate @item-click="cateClick"></cate><!--子传父-->
+</div>
+
+<template id="cpn">
+  <div><!--要有 root 根 包起来 模版代码-->
+    <h1>H1</h1>
+    {{cmovies}},{{cmessage}}
+    <ul>
+      <li v-for="item in cmovies">{{item}}</li>
+    </ul>
+  </div>
+</template>
+<template id="cate">
+  <div>
+    <button v-for="item of categories" @click="btnClick(item)">
+      {{item.id}}==={{item.name}}
+    </button>
+  </div>
+</template>
+<script src="../js/vue.js"></script>
+<script>
+
+  const cate = {
+    template: '#cate',
+    data() {
+      return {
+        categories: [
+          {id: 'a', name: '热门推荐'},
+          {id: 'b', name: 'BBB'},
+          {id: 'c', name: 'CCC'},
+        ],
+      }
+    },
+    methods: {
+      btnClick(item) {
+        //传给父组件
+        this.$emit('item-click', item)
+      }
+    }
+  }
+
+  const cpn = {
+    template: '#cpn',
+    //父组件传递给子组件 在 app 那里绑定
+    // props: ['cmovies','cmessage'],
+    props: {
+      //1.类型限制写法
+      // cmovies: Array,
+      // cmessage: String,
+
+      //2.提供默认值
+      cmovies: {
+        type: Array,
+        default() {
+          return ['default', 'ccc']
+        },
+        required: false,
+      },
+      cmessage: {
+        type: String,
+        default: 'msg',
+        required: false,
+      }
+    },
+    data() {
+      return {}
+    }
+  }
+
+  const app = new Vue({
+    el: '#app',
+    data: {
+      message: '你好',
+      movies: ['a', 'b', 'c', 'd'],
+    },
+    components: {
+      cpn,
+      cate,
+    },
+    methods: {
+      cateClick(item) {//父组件接受子组件数据
+        console.log(item.id + " " + item.name);
+      }
+    }
+  })
+</script>
+</body>
+</html>
